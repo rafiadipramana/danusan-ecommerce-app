@@ -29,7 +29,8 @@
                     <a href="{{ route('product.detail', ['id' => $product->id]) }}" class="text-decoration-none">
                         <div class="card product-card border-0">
                             <div class="card-img">
-                                <img src="{{ asset('img/lorem.png') }}" alt="" class="img-fluid rounded">
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="" class="img-fluid rounded">
+                                {{-- <img src="{{ asset('img/lorem.png') }}" alt="" class="img-fluid rounded"> --}}
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title bold-weight">{{ $product->name }}</h5>

@@ -12,6 +12,7 @@ use App\Http\Controllers\AdminSaleController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminStatisticController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\SellerProductController;
 
 /*
@@ -31,6 +32,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/products', [ProductController::class, 'index'])->name('product');
 Route::get('/products/{id}', [ProductController::class, 'detail'])->name("product.detail");
 Route::get('/about', [HomeController::class, 'about'])->name('home.about');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     // Routes accessible only to admin
@@ -48,7 +50,9 @@ Route::middleware(['auth', 'seller'])->group(function () {
 
     // Aksi CRUD pada model Product
     Route::post('/seller/products/store', [SellerProductController::class, 'store'])->name("seller.product.store");
-    Route::delete('/seller/products/{id}', [SellerProductController::class, 'delete'])->name("seller.product.delete");
+    Route::delete('/seller/products/{id}/delete', [SellerProductController::class, 'delete'])->name("seller.product.delete");
+    Route::get('/seller/products/{id}/edit', [SellerProductController::class, 'edit'])->name("seller.product.edit");
+    Route::put('/seller/products/{id}/update', [SellerProductController::class, 'update'])->name("seller.product.update");
 });
 
 Route::middleware(['auth', 'customer'])->group(function () {

@@ -15,6 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/dd0af89a3c.js" crossorigin="anonymous"></script>
     <title>Marketplace</title>
 </head>
 
@@ -46,6 +47,13 @@
                     <li class="nav-item mx-1">
                         <a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="/about">About Us</a>
                     </li>
+                    @auth
+                        @if (auth()->user()->role == 'customer')
+                            <li class="nav-item mx-1">
+                                <a class="nav-link {{ request()->is('cart') ? 'active' : '' }}" href="/cart">My Cart</a>
+                            </li>
+                        @endif
+                    @endauth
                 </ul>
                 @guest
                     <ul class="navbar-nav ml-auto normal-weight">
@@ -59,12 +67,22 @@
                 @else
                     <ul class="navbar-nav ml-auto">
                         @auth
-                            <small>{{ auth()->user()->name }}</small>
-                            <form id="logout" action="{{ route('logout') }}" method="POST">
-                                <a role="button" class="btn btn-danger mx-2 shadow"
-                                    onclick="document.getElementById('logout').submit();">Keluar</a>
-                                @csrf
-                            </form>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ auth()->user()->name }}
+                                </button>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="#">Action</a></li>
+                                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                                  <li>
+                                    <form id="logout" action="{{ route('logout') }}" method="POST">
+                                        <a role="button" class="btn btn-danger mx-2 shadow"
+                                            onclick="document.getElementById('logout').submit();">Keluar</a>
+                                        @csrf
+                                    </form>
+                                  </li>
+                                </ul>
+                              </div>
                         @endauth
                     </ul>
                 @endguest
