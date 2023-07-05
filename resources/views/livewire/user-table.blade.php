@@ -14,7 +14,16 @@
                 <tr>
                     <td>{{ $users->firstItem() + $index }}</td>
                     <td>{{ $user->name }}</td>
-                    <td>{{ ucwords($user->role) }}</td>
+                    <td>
+                        <select class="form-select" wire:model="roleUpdate.{{ $user->id }}"
+                            wire:change="updateRole('{{ $user->id }}')">
+                            <option value="admin" {{ $roleUpdate[$user->id] == 'admin' ? 'selected' : '' }}>Admin
+                            </option>
+                            <option value="seller" {{ $roleUpdate[$user->id] == 'seller' ? 'selected' : '' }}>
+                                Seller</option>
+                            <option value="customer" {{ $roleUpdate[$user->id] == 'user' ? 'selected' : '' }}>Customer</option>
+                        </select>
+                    </td>
                 </tr>
             @endforeach
         </tbody>

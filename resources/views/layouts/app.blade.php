@@ -34,7 +34,7 @@
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse normal-weight" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item mx-1">
                         <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" aria-current="page"
@@ -65,15 +65,17 @@
                         </li>
                     </ul>
                 @else
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav mx-4 normal-weight">
                         @auth
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     {{ auth()->user()->name }}
                                 </button>
                                 <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="#">Action</a></li>
-                                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    @if (auth()->user()->role === "admin")
+                                        <li><a class="dropdown-item" href="/admin">Panel Admin</a></li>
+                                    @endif
+                                  <li><a class="dropdown-item" href="#">Profil Pengguna</a></li>
                                   <li>
                                     <form id="logout" action="{{ route('logout') }}" method="POST">
                                         <a role="button" class="btn btn-danger mx-2 shadow"

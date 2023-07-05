@@ -14,6 +14,7 @@ use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminStatisticController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\SellerProductController;
+use App\Http\Controllers\SellerProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,12 +42,19 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.user.index');
     Route::get('/admin/sales', [AdminSaleController::class, 'index'])->name('admin.sale.index');
     Route::get('/admin/statistics', [AdminStatisticController::class, 'index'])->name('admin.statistic.index');
+
+    // Aksi CRUD pada model Category
+    Route::post('/admin/categories/store', [AdminCategoryController::class, 'store'])->name("admin.category.store");
+    Route::delete('/admin/categories/{id}/delete', [AdminCategoryController::class, 'delete'])->name("admin.category.delete");
+    Route::get('/admin/categories/{id}/edit', [AdminCategoryController::class, 'edit'])->name("admin.category.edit");
+    Route::put('/admin/categories/{id}/update', [AdminCategoryController::class, 'update'])->name("admin.category.update");
 });
 
 Route::middleware(['auth', 'seller'])->group(function () {
     // Routes accessible only to sellers
     Route::get('/seller', [SellerController::class, 'index'])->name("seller.home.index");
     Route::get('/seller/products', [SellerProductController::class, 'index'])->name("seller.product.index");
+    Route::put('/seller/profiles', [SellerProfileController::class, 'update'])->name("seller.profile.index");
 
     // Aksi CRUD pada model Product
     Route::post('/seller/products/store', [SellerProductController::class, 'store'])->name("seller.product.store");

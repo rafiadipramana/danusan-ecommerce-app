@@ -148,10 +148,18 @@
                             <div>Penjualan</div>
                         </a>
                     </li>
+                    
                     <li class="menu-item">
                         <a href="/seller/statistics" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                             <div>Statistik</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="/seller/profiles" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+                            <div>Profil Toko</div>
                         </a>
                     </li>
                 </ul>

@@ -38,4 +38,20 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+     * Get the post login redirect path for the user based on their role.
+     *
+     * @return string
+     */
+    protected function redirectTo()
+    {
+        if (auth()->user()->role == 'admin') {
+            return '/admin';
+        } elseif (auth()->user()->role == 'seller') {
+            return '/seller';
+        } else {
+            return $this->redirectTo;
+        }
+    }
 }

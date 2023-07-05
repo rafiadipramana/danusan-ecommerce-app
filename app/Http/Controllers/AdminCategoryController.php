@@ -10,21 +10,25 @@ class AdminCategoryController extends Controller
 {
     public function index()
     {
-        $viewData = [
-            "categories" => Category::all(),
-        ];
-        return view("admin.category.index")->with("viewData", $viewData);
+        return view('admin.category.index', [
+            'categories' => Category::all()
+        ]);
     }
 
     public function store(Request $request)
     {
-        Category::validate($request);
+        // Validasi input
+        $request->validate([
+            'name' => 'required',
+        ]);
 
-        $newProduct = new Category();
-        $newProduct->setName($request->input('name'));
-        $newProduct->save();
+        // Buat objek produk baru
+        $category = new Category();
+        $category->name = $request->name;
+        // Simpan produk ke database
+        $category->save();
 
-        return back();
+        return redirect()->route('admin.category.index')->with('success', 'Kategori berhasil ditambahkan.');
     }
 
     public function delete($id)
@@ -35,22 +39,25 @@ class AdminCategoryController extends Controller
 
     public function edit($id)
     {
-        $viewData = [
-            "title" => "Admin Page - Edit Product - Online Store",
-            "product" => Category::findOrFail($id),
-            "categories" => Category::findOrFail($id),
-            "name" => Auth::user()->getName()
-        ];
-        return view('admin.category.edit')->with("viewData", $viewData);
+        return view('admin.category.edit', [
+            "category" => Category::findOrFail($id)
+        ]);
     }
 
     public function update(Request $request, $id)
     {
-        Category::validate($request);
+        // Validasi input
+        $request->validate([
+            'name' => 'required'
+        ]);
 
-        $product = Category::findOrFail($id);
-        $product->setName($request->input('name'));
-        $product->save();
-        return redirect()->route('admin.category.index');
+        // Buat objek produk baru
+        $category = Category::findOrFail($id);
+        $category->name = $request->name;
+
+        // Simpan produk ke database
+        $category->save();
+
+        return redirect()->route('admin.category.index')->with('success', 'Kategori berhasil ditambahkan.');
     }
 }
